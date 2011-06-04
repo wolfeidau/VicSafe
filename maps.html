@@ -45,8 +45,38 @@
                     draggable: true,
                     icon: blueimg
                     
+                });     
+                
+                
+            }
+            
+            function drawpoly(){
+                var polystring = "-37.716961 144.94297 -37.737598 144.936447 -37.759859 144.983139 -37.743028 145.034294 -37.712072 145.029831 -37.702837 144.989319 -37.716961 144.94297";
+    
+                var polygon1;
+                var arr = new Array();
+                arr = polystring.split(" ");
+                var i=0;
+                var j=0;
+                var polycoords = new Array();
+                while(i<arr.length){
+                    polycoords[j] = new google.maps.LatLng(arr[i],arr[i+1]);
+                    
+                    i = i+2;
+                    j++;
+                }
+                
+                polygon1 = new google.maps.Polygon({
+                    paths: polycoords,
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: "#FF0000",
+                    fillOpacity: 0.35
                 });
                 
+                polygon1.setMap(map);
+                map.setCenter(polycoords[0]);   
             }
         </script>
     </head>
@@ -55,5 +85,8 @@
         <div id="map_canvas" style="width:600px; height:600px"></div><br/>
         <label>latitude: </label><input id="latitude" type="text"/><br/>
         <label>longitude: </label><input id="longitude" type="text"/>
+        <form>
+            <input type="button" value="drawpoly" onclick="drawpoly()"/>
+        </form>
     </body>
 </html>
