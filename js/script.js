@@ -9,6 +9,7 @@
 				msgType: 'Alert',
 			},
 			info: {
+				headline: 'Building damage in Hawthorn East',
 				category: 'Met',
 				responseType: 'Evacuate',
 				urgency: 'Immediate',
@@ -19,16 +20,17 @@
 				resourceDesc: 'Website',
 				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
 			}],
-			areas: [{
+			area: {
 				areaDesc: 'Hawthorn VIC',
 				polygon: "-37.817921 145.033951 -37.818463 145.05043 -37.842326 145.053864 -37.842868 145.039444 -37.817921 145.033951"
-			}]
+			}
 		},{
 			alert: {
 				status: 'Actual',
 				msgType: 'Alert',
 			},
 			info: {
+				headline: 'Flooding in Armadale',
 				category: 'Met',
 				responseType: 'Evacuate',
 				urgency: 'Immediate',
@@ -39,16 +41,17 @@
 				resourceDesc: 'Website',
 				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
 			}],
-			areas: [{
+			area: {
 				areaDesc: 'Hawthorn VIC',
 				polygon: '-37.843953 145.020218 -37.851543 145.041504 -37.865097 145.025024 -37.843953 145.020218'
-			}]
+			}
 		},{
 			alert: {
 				status: 'Actual',
 				msgType: 'Alert',
 			},
 			info: {
+				headline: 'Major flooding in Bulleen Park',
 				category: 'Met',
 				responseType: 'Evacuate',
 				urgency: 'Immediate',
@@ -59,10 +62,10 @@
 				resourceDesc: 'Website',
 				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
 			}],
-			areas: [{
+			area: {
 				areaDesc: 'Hawthorn VIC',
 				polygon: '-37.776142 145.057297 -37.784283 145.067596 -37.769629 145.086823 -37.761487 145.07309 -37.776142 145.057297'
-			}]
+			}
 		}];
 	
 		var location;
@@ -170,7 +173,10 @@
 			clearPolygons();
 			
 			$.each(mockjson, function(){
-				drawPolygon(this.areas[0].polygon);
+				var obj = this;
+				drawPolygon(obj.area.polygon, function() {
+					alert(obj.info.headline)
+				});
 			});
 		}
 		
@@ -180,7 +186,7 @@
 			});
 		}
 		
-		function drawPolygon(polystring){
+		function drawPolygon(polystring, clickfunction){
 			var polygon1;
 			var arr = new Array();
 				arr = polystring.split(" ");
@@ -200,11 +206,12 @@
 				strokeOpacity: 0.8,
 				strokeWeight: 3,
 				fillColor: "#FF0000",
-				fillOpacity: 0.35,
-				contentString: "Testing"
+				fillOpacity: 0.35
 			});
 			
 			polygon1.setMap(map);
+			
+			google.maps.event.addListener(polygon1, 'click', clickfunction);
 
 			polygons.push(polygon1);
 		}
