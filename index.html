@@ -42,6 +42,8 @@
 		
 		<div id="location">
 			<input type="text" placeholder="Enter your location..." />
+			<ul>
+			</ul>
 		</div>
     </header>
 	
@@ -57,7 +59,6 @@
 			</div>
 		
 			<div id="map">
-				<p>Map</p>
 			</div>
 		</div>
 	
@@ -68,6 +69,9 @@
     </footer>
   </div> <!--! end of #container -->
 
+  <script type="text/x-underscore-template">
+  
+  </script>
 
   <!-- JavaScript at the bottom for fast page loading -->
 
@@ -75,7 +79,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
   <script>window.jQuery || document.write("<script src='js/libs/jquery-1.5.1.min.js'>\x3C/script>")</script>
 
+  <!-- Grab CDNJS's Underscore; fall back to local if necessary -->
+  <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.6/underscore-min.js"></script>
+  <script>window._ || document.write("<script src='js/libs/underscore-min.js'>\x3C/script>")</script>
 
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="http://code.google.com/apis/gears/gears_init.js"></script> 
+  
   <!-- scripts concatenated and minified via ant build script-->
   <script src="js/plugins.js"></script>
   <script src="js/script.js"></script>

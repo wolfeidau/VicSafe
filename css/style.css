@@ -180,12 +180,34 @@ header h1 {
 #location input {
 	color: #808080;
 	font-size: 20px;
+	margin: 0;
 	width: 400px;
 }
+
+#location ul {
+	background-color: white;
+	border: 1px solid #a0a0a0;
+	display: none;
+	list-style-type: none;
+	left: 50%;
+	margin: 0 0 0 -202px;
+	padding: 5px 0;
+	position: absolute;
+	text-align: left;
+	width: 400px;
+}
+#location li {
+	padding: 3px 5px;
+}
+	#location li:hover {
+		background-color: #a0a0a0;
+		color: white;
+	}
  
 #data {
 	display: block;
-	height: 400px;
+	margin: 0 auto;
+	height: 500px;
 }
 
 #alerts {
@@ -193,7 +215,7 @@ header h1 {
 	display: block;
 	float: left;
 	height: 100%;
-	width: 400px;
+	width: 350px;
 }
 
 #alerts ul {
@@ -203,13 +225,11 @@ header h1 {
 #alerts li {
 	border-bottom: 1px solid #a0a0a0;
 	list-style-type: none;
-	positi
 	margin: 0;
 	padding: 5px;
 }
 
 #map {
-	background-color: green;
 	display: block;
 	height: 100%;
 }
