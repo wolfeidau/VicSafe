@@ -253,10 +253,15 @@ header h1 {
 #alerts li {
 	border-bottom: 1px solid #eaeaea;
 	color: #808080;
+	cursor: pointer;
 	list-style-type: none;
 	margin: 0 0 10px 0;
 	padding: 10px;
 }
+	#alerts li.focus {
+		background-color: rgb(0,105,183);
+		color: white;
+	}
 
 #map {
 	display: block;

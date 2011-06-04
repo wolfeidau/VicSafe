@@ -13,7 +13,7 @@
 				category: 'Met',
 				responseType: 'Evacuate',
 				urgency: 'Immediate',
-				severity: 'Extreme',
+				severity: 'Minor',
 				certainty: 'Observed',
 			},
 			resources: [{
@@ -51,11 +51,11 @@
 				msgType: 'Alert',
 			},
 			info: {
-				headline: 'Major flooding in Bulleen Park',
+				headline: 'Severe flooding in Bulleen Park',
 				category: 'Met',
 				responseType: 'Evacuate',
 				urgency: 'Immediate',
-				severity: 'Extreme',
+				severity: 'Severe',
 				certainty: 'Observed',
 			},
 			resources: [{
@@ -76,6 +76,14 @@
 		var infowindow = new google.maps.InfoWindow();
 		var marker;
 		var geocoder;
+		
+		var severityColors = {
+			Extreme: "black",
+			Severe: "red",
+			Moderate: "blue",
+			Minor: "aqua",
+			Unknown: "white"
+		};
 		  
 		function initialize() {
 		  var myOptions = {
@@ -151,6 +159,10 @@
 		var layer,
 			circle,
 			polygons = [];
+			
+		var $info = $("#alerts").find("ul");
+		
+		var activePolygon;
 		
 		function dropPin(latitude, longitude) {
 			location = new google.maps.LatLng(latitude, longitude);
@@ -163,7 +175,7 @@
 					clickable: false,
 					radius: 10000,
 					map: map,
-					fillOpacity: 0.2,
+					fillOpacity: 0.1,
 					strokeOpacity: 0.5,
 					strokeWeight: 1
 				  });
@@ -172,11 +184,34 @@
 			
 			clearPolygons();
 			
+			$info.html('');
+			
+			function activatePolygon(polygon, $li) {
+				if (activePolygon) {
+					activePolygon.setOptions({fillOpacity: 0.2, strokeWeight: 2});
+				}
+				activePolygon = polygon;
+				polygon.setOptions({fillOpacity: 0.75, strokeWeight: 5});
+				$info.children('li.focus').removeClass('focus');
+				$li.addClass('focus');
+			}
+			
 			$.each(mockjson, function(){
 				var obj = this;
-				drawPolygon(obj.area.polygon, function() {
-					alert(obj.info.headline)
+				
+				var $li = $('<li>'+obj.info.headline+'</li>');
+				
+				var polygon = drawPolygon(obj.area.polygon, obj.info);
+				
+				google.maps.event.addListener(polygon, 'click', function() {
+					activatePolygon(polygon, $li)
 				});
+				
+				$li.click(function(){
+					activatePolygon(polygon, $(this))
+				});
+				
+				$info.append($li);
 			});
 		}
 		
@@ -186,7 +221,7 @@
 			});
 		}
 		
-		function drawPolygon(polystring, clickfunction){
+		function drawPolygon(polystring, info, clickfunction){
 			var polygon1;
 			var arr = new Array();
 				arr = polystring.split(" ");
@@ -202,18 +237,18 @@
 			
 			polygon1 = new google.maps.Polygon({
 				paths: polycoords,
-				strokeColor: "#FF0000",
+				strokeColor: severityColors[info.severity],
 				strokeOpacity: 0.8,
-				strokeWeight: 3,
-				fillColor: "#FF0000",
-				fillOpacity: 0.35
+				strokeWeight: 2,
+				fillColor: severityColors[info.severity],
+				fillOpacity: 0.2
 			});
 			
 			polygon1.setMap(map);
-			
-			google.maps.event.addListener(polygon1, 'click', clickfunction);
 
 			polygons.push(polygon1);
+			
+			return polygon1;
 		}
 		
 	});
