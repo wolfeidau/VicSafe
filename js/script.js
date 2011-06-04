@@ -1,23 +1,69 @@
 (function(window, $, _){
 
-	var WeatherWarning = {
-		
-		location: {
-			init: function() {
-				var $container = $("#location");
-				this.$input = $container.children("input");
-				this.$results = $container.children("ul");
-				
-				this.$input.keyup(function(event){
-					var keycode = event.which;					
-				});
-			}
-		}
-		
-	};
-	
 	//Google Maps code
 	$(function(){
+	
+		var mockjson = [{
+			alert: {
+				status: 'Actual',
+				msgType: 'Alert',
+			},
+			info: {
+				category: 'Met',
+				responseType: 'Evacuate',
+				urgency: 'Immediate',
+				severity: 'Extreme',
+				certainty: 'Observed',
+			},
+			resources: [{
+				resourceDesc: 'Website',
+				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
+			}],
+			areas: [{
+				areaDesc: 'Hawthorn VIC',
+				polygon: "-37.817921 145.033951 -37.818463 145.05043 -37.842326 145.053864 -37.842868 145.039444 -37.817921 145.033951"
+			}]
+		},{
+			alert: {
+				status: 'Actual',
+				msgType: 'Alert',
+			},
+			info: {
+				category: 'Met',
+				responseType: 'Evacuate',
+				urgency: 'Immediate',
+				severity: 'Extreme',
+				certainty: 'Observed',
+			},
+			resources: [{
+				resourceDesc: 'Website',
+				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
+			}],
+			areas: [{
+				areaDesc: 'Hawthorn VIC',
+				polygon: '-37.843953 145.020218 -37.851543 145.041504 -37.865097 145.025024 -37.843953 145.020218'
+			}]
+		},{
+			alert: {
+				status: 'Actual',
+				msgType: 'Alert',
+			},
+			info: {
+				category: 'Met',
+				responseType: 'Evacuate',
+				urgency: 'Immediate',
+				severity: 'Extreme',
+				certainty: 'Observed',
+			},
+			resources: [{
+				resourceDesc: 'Website',
+				url: 'http://www.bom.gov.au/australia/warnings/index.shtml',
+			}],
+			areas: [{
+				areaDesc: 'Hawthorn VIC',
+				polygon: '-37.776142 145.057297 -37.784283 145.067596 -37.769629 145.086823 -37.761487 145.07309 -37.776142 145.057297'
+			}]
+		}];
 	
 		var location;
 		var siberia = new google.maps.LatLng(60, 105);
@@ -30,7 +76,7 @@
 		  
 		function initialize() {
 		  var myOptions = {
-			zoom: 11,
+			zoom: 12,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		  };
 		  map = new google.maps.Map(document.getElementById("map"), myOptions);
@@ -107,7 +153,7 @@
 			location = new google.maps.LatLng(latitude, longitude);
 			marker.setPosition(location);
 			map.setCenter(location);
-			map.setZoom(11);
+			map.setZoom(12);
 			
 			if (!circle) {
 				circle = new google.maps.Circle({
@@ -123,9 +169,9 @@
 			
 			clearPolygons();
 			
-			drawPolygon("-37.817921 145.033951 -37.818463 145.05043 -37.842326 145.053864 -37.842868 145.039444 -37.817921 145.033951");
-			drawPolygon("-37.843953 145.020218 -37.851543 145.041504 -37.865097 145.025024 -37.843953 145.020218");
-			drawPolygon("-37.776142 145.057297 -37.784283 145.067596 -37.769629 145.086823 -37.761487 145.07309 -37.776142 145.057297");
+			$.each(mockjson, function(){
+				drawPolygon(this.areas[0].polygon);
+			});
 		}
 		
 		function clearPolygons() {

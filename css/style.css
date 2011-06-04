@@ -170,6 +170,7 @@ a:hover { color: #036; }
 
 header {
 	background-color: rgb(238,245,251);
+	margin-bottom: 10px;
 	text-align: center;
 	text-shadow: 1px 2px 1px white;
 	padding: 0 20px 20px 20px;
@@ -222,6 +223,7 @@ header h1 {
 	display: block;
 	margin: 0 auto;
 	height: 500px;
+	padding-right: 10px;
 }
 
 #alerts {
