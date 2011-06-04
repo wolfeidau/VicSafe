@@ -263,6 +263,20 @@ header h1 {
 		color: white;
 	}
 
+#alerts ul ul {
+	display: none;
+	margin: 8px 0 0 5px;
+	padding: 0;
+}
+	#alerts ul ul li {
+		border: 0;
+		margin: 0;
+		padding: 4px;
+	}
+	#alerts li.focus li {
+		color: white;
+	}
+
 #map {
 	display: block;
 	height: 100%;

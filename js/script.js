@@ -192,14 +192,16 @@
 				}
 				activePolygon = polygon;
 				polygon.setOptions({fillOpacity: 0.75, strokeWeight: 5});
-				$info.children('li.focus').removeClass('focus');
-				$li.addClass('focus');
+				$info.children('li.focus').removeClass('focus').children('ul').slideUp();
+				$li.addClass('focus').children('ul').slideDown();
 			}
+			
+			
 			
 			$.each(mockjson, function(){
 				var obj = this;
 				
-				var $li = $('<li>'+obj.info.headline+'</li>');
+				var $li = $('<li>'+obj.info.headline+'<ul><li>Testing: Testing</li><li>Testing: Testing</li><li>Testing: Testing</li></ul></li>');
 				
 				var polygon = drawPolygon(obj.area.polygon, obj.info);
 				
@@ -221,6 +223,13 @@
 			});
 		}
 		
+		function setPolygonColor(polygon, color, info) {
+			if (color === 'default') {
+				color = severityColors[info.severity];
+			}
+			polygon.setOptions({fillColor: color, strokeColor: color});
+		}
+		
 		function drawPolygon(polystring, info, clickfunction){
 			var polygon1;
 			var arr = new Array();
@@ -237,12 +246,12 @@
 			
 			polygon1 = new google.maps.Polygon({
 				paths: polycoords,
-				strokeColor: severityColors[info.severity],
 				strokeOpacity: 0.8,
 				strokeWeight: 2,
-				fillColor: severityColors[info.severity],
 				fillOpacity: 0.2
 			});
+			
+			setPolygonColor(polygon1, 'default', info);
 			
 			polygon1.setMap(map);
 
