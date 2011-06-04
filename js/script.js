@@ -25,6 +25,8 @@
 		var browserSupportFlag =  new Boolean();
 		var map;
 		var infowindow = new google.maps.InfoWindow();
+		var marker;
+		var geocoder;
 		  
 		function initialize() {
 		  var myOptions = {
@@ -32,6 +34,14 @@
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		  };
 		  map = new google.maps.Map(document.getElementById("map"), myOptions);
+		  geocoder = new google.maps.Geocoder();
+		  var blueimg = new google.maps.MarkerImage("http://www.google.com/intl/en_us/mapfiles/ms/icons/red-dot.png");
+			marker = new google.maps.Marker({
+				map: map,
+				draggable: true,
+				icon: blueimg
+				
+			});
 		  
 		  // Try W3C Geolocation method (Preferred)
 		  if(navigator.geolocation) {
@@ -78,6 +88,30 @@
 		}
 		
 		initialize();
+		
+		$("#location>input").autocomplete({
+		  //This bit uses the geocoder to fetch address values
+		  source: function(request, response) {
+			geocoder.geocode( {'address': request.term }, function(results, status) {
+			  response($.map(results, function(item) {
+				return {
+				  label:  item.formatted_address,
+				  value: item.formatted_address,
+				  latitude: item.geometry.location.lat(),
+				  longitude: item.geometry.location.lng()
+				}
+			  }));
+			})
+		  },
+		  //This bit is executed upon selection of an address
+		  select: function(event, ui) {
+			$("#latitude").val(ui.item.latitude);
+			$("#longitude").val(ui.item.longitude);
+			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
+			marker.setPosition(location);
+			map.setCenter(location);
+		  }
+		});
 		
 	});
 
