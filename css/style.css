@@ -169,39 +169,53 @@ a:hover { color: #036; }
  */
 
 header {
+	background-color: rgb(238,245,251);
 	text-align: center;
-	padding: 20px;
+	text-shadow: 1px 2px 1px white;
+	padding: 0 20px 20px 20px;
 }
 header h1 {
-	font-size: 32px;
-	margin-bottom: 10px;
+	color: rgb(0,105,183);
+	font-family: 'News Cycle', sans-serif;
+	font-size: 60px;
+	margin-bottom: 20px;
 }
 
 #location input {
+	-moz-box-shadow: 0px 0px 20px rgba(0,105,183,.1); 
+	-webkit-box-shadow: 0px 0px 20px rgba(0,105,183,.1); 
+	box-shadow: 0px 0px 20px rgba(0,105,183,.1); 
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	border-radius: 10px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
+	border: 1px solid #eaeaea;
 	color: #808080;
 	font-size: 20px;
 	margin: 0;
+	padding: 10px;
 	width: 400px;
 }
-
-#location ul {
+	#location input:focus {
+		-moz-box-shadow: 0px 0px 20px rgba(0,105,183,.5); 
+		-webkit-box-shadow: 0px 0px 20px rgba(0,105,183,.5); 
+		box-shadow: 0px 0px 20px rgba(0,105,183,.5); 
+		outline: 0;
+	}
+ 
+.ui-autocomplete {
 	background-color: white;
-	border: 1px solid #a0a0a0;
-	display: none;
-	list-style-type: none;
-	left: 50%;
-	margin: 0 0 0 -202px;
-	padding: 5px 0;
-	position: absolute;
-	text-align: left;
 	width: 400px;
+	border: 1px solid #cfcfcf;
+	list-style-type: none;
+	padding: 5px 0;
 }
-#location li {
+.ui-autocomplete li {
+	cursor: pointer;
 	padding: 3px 5px;
 }
-	#location li:hover {
-		background-color: #a0a0a0;
-		color: white;
+	.ui-autocomplete li:hover {
+		background-color: #e0e0e0;
 	}
  
 #data {
@@ -211,29 +225,41 @@ header h1 {
 }
 
 #alerts {
-	background-color: #f0f0f0;
+	background-color: white;
 	display: block;
 	float: left;
 	height: 100%;
 	width: 350px;
 }
 
+#alerts h2 {
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	border-radius: 5px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
+	background: #fafafa;
+	border: 1px solid #eaeaea;
+	font-size: 14px;
+	margin: 20px;
+	padding: 10px;
+}
+
 #alerts ul {
-	margin: 20px 20px 20px 20px;
+	margin: 20px;
 	padding: 0;
 }
 #alerts li {
-	border-bottom: 1px solid #a0a0a0;
+	border-bottom: 1px solid #eaeaea;
+	color: #808080;
 	list-style-type: none;
-	margin: 0;
-	padding: 5px;
+	margin: 0 0 10px 0;
+	padding: 10px;
 }
 
 #map {
 	display: block;
 	height: 100%;
 }
-
 
 
 
