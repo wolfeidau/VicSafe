@@ -39,27 +39,34 @@
 
   <div id="container">
     <header>
-		<h1>VicSafe</h1>
+  		<h1>VicSafe</h1>
 		
-		<div id="location">
-			<input type="text" placeholder="Enter your location..." />
-		</div>
+  		<div id="location">
+  			<input type="text" placeholder="Enter your location..." />
+  		</div>
     </header>
 	
     <div id="main" role="main">
+  		
+  		<div id="data">
+  			
+  			<div id="alerts">
+  				<h2>Region Alerts</h2>
+  				<ul>
+  				</ul>
+  			</div>
+  			
+  			<div id="map">
+  			
+  			</div>
 
-		<div id="data">
-			<div id="alerts">
-				<h2>Region Alerts</h2>
-				<ul>
-				</ul>
-			</div>
-		
-			<div id="map">
-			</div>
-		</div>
-	
-    </div>
+  		</div><!--! end of #data -->
+
+  		<div id="comments">
+  		  <div id="disqus_thread"></div>
+		  </div>
+
+    </div><!--! end of #main -->
 	
     <footer>
 
@@ -101,5 +108,38 @@
     s.parentNode.insertBefore(g,s)}(document,"script"));
   </script>
 
+  <script>
+    //Event Handler to reload comments if the refernence changes. Ie the alert.
+     function ReloadComments(ref) {
+         DISQUS.reset({
+             reload: true,
+             config: function () {
+                 this.page.identifier = ref;
+                 this.page.url = window.location.href;
+             }
+         });
+     }
+
+     //Gets an param from  http://www.netlobo.com/url_query_string_javascript.html
+    function gup( name )
+    {
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      var results = regex.exec( window.location.href );
+      if( results == null )
+        return "";
+      else
+        return results[1];
+    }
+  
+  
+    var disqus_developer = (/localhost|github|dev/i).test(location.host);
+    var disqus_identifier = '12234234';
+    var disqus_url = window.location.href;
+    var disqus_title = 'weatherwarnings';
+    ReloadComments('12234234');    
+  </script>
+  <script type="text/javascript" src="http://disqus.com/forums/weatherwarnings/embed.js"></script>
 </body>
 </html>

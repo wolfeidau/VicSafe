@@ -282,15 +282,10 @@ header h1 {
 	height: 100%;
 }
 
-
-
-
-
-
-
-
-
-
+#comments {
+	padding: 10px;
+  width: 500px;
+}
 
 
 /**
