@@ -7,7 +7,7 @@
 		 * June 2011.
 		 */
 
-		var webSocket = new io.Socket('tbqf.showoff.io', {port:80});
+		var webSocket = new io.Socket('tvqf.showoff.io', {port:80});
 
 		/**
 		 * Pending requests keyed by guid, with a callback as the value.
@@ -577,7 +577,7 @@
 			var url = '/alerts/nearby/'+latitude.toString().replace(".","_")+'/'+longitude.toString().replace(".","_")+'/10.json';
 			
 			socketRequest(url, {}, function(err, response){
-				console.log(response);
+				//console.log(response);
 			});
 			
 			var returndata = warrandyte;
