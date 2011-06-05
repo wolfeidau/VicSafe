@@ -7,7 +7,8 @@
 		 * June 2011.
 		 */
 
-		var webSocket = new io.Socket('tvqf.showoff.io', {port:80});
+		//var webSocket = new io.Socket('7c9a.showoff.io', {port:80});
+		var webSocket = new io.Socket(); //localhost
 
 		/**
 		 * Pending requests keyed by guid, with a callback as the value.
@@ -578,9 +579,43 @@
 			
 			socketRequest(url, {}, function(err, response){
 				//console.log(response);
+				var returndata = JSON.parse(response)
+				console.log(returndata);
+				
+				$.each(returndata, function(){
+					var obj = this,
+						returnHtml = '';
+					
+					returnHtml = '<li>' + obj.info.headline + '<ul>'+
+						'<li><em>Response Type:</em> '+ obj.info.responseType + '</li>'+
+						'<li><em>Urgency:</em> '+ obj.info.urgency + '</li>'+
+						'<li><em>Severity:</em> '+ obj.info.severity + '</li>'+
+						'<li><em>Certainty:</em> '+ obj.info.certainty + '</li>';
+					
+					if (obj.resource.length) {
+						returnHtml += '<li class="title">Resources</li>';
+						$.each(obj.resource, function(){
+							returnHtml += '<li><a href="' + this.url + '" target="_blank">' + this.resourceDesc + '</a></li>';
+						});
+					}
+					
+					returnHtml += '<li class="comments">Show Comments</li></ul></li>';
+					
+					var $li = $(returnHtml);
+					
+					var polygon = drawPolygon(obj.area.geocode, obj.info);
+					
+					google.maps.event.addListener(polygon, 'click', function() {
+						activatePolygon(polygon, $li, obj)
+					});
+					
+					$li.click(function(){
+						activatePolygon(polygon, $(this), obj)
+					});
+					
+					$info.append($li);
+				});
 			});
-			
-			var returndata = warrandyte;
 			
 			location = new google.maps.LatLng(latitude, longitude);
 			marker.setPosition(location);
@@ -626,39 +661,6 @@
 			
 			$info.html('');
 			
-			$.each(returndata, function(){
-				var obj = this,
-					returnHtml = '';
-				
-				returnHtml = '<li>' + obj.info.headline + '<ul>'+
-					'<li><em>Response Type:</em> '+ obj.info.responseType + '</li>'+
-					'<li><em>Urgency:</em> '+ obj.info.urgency + '</li>'+
-					'<li><em>Severity:</em> '+ obj.info.severity + '</li>'+
-					'<li><em>Certainty:</em> '+ obj.info.certainty + '</li>';
-				
-				if (obj.resource.length) {
-					returnHtml += '<li class="title">Resources</li>';
-					$.each(obj.resource, function(){
-						returnHtml += '<li><a href="' + this.url + '" target="_blank">' + this.resourceDesc + '</a></li>';
-					});
-				}
-				
-				returnHtml += '<li class="comments">Show Comments</li></ul></li>';
-				
-				var $li = $(returnHtml);
-				
-				var polygon = drawPolygon(obj.area.geocode, obj.info);
-				
-				google.maps.event.addListener(polygon, 'click', function() {
-					activatePolygon(polygon, $li, obj)
-				});
-				
-				$li.click(function(){
-					activatePolygon(polygon, $(this), obj)
-				});
-				
-				$info.append($li);
-			});
 		}
 		
 		function clearPolygons() {
