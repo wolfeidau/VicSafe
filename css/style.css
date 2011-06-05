@@ -350,6 +350,7 @@ header h1 {
   top: 50px;
   left: 50%;
   top: 50%;
+  z-index: 9999999;
 }
 
 #legend {
