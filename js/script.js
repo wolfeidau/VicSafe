@@ -485,6 +485,12 @@
 			Minor: "blue",
 			Unknown: "white"
 		};
+		
+		var $legend = $('<ul id="legend"></ul>');
+		$.each(severityColors, function(key, val) {
+			$legend.append('<li><span class="color" style="background-color:' + val + '">&nbsp;</span> ' + key + '</li>');
+		});
+		$("header").append($legend);
 		  
 		function initialize() {
 		  var myOptions = {
