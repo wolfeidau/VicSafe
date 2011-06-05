@@ -276,6 +276,198 @@
 				polygon: '-37.776142 145.057297 -37.784283 145.067596 -37.769629 145.086823 -37.761487 145.07309 -37.776142 145.057297'
 			}
 		}];
+		
+		var warrandyte = [{
+			"alert": {
+				"status": "Actual",
+				"scope": "Public",
+				"references": "",
+				"note": "",
+				"source": "",
+				"msgType": "Alert",
+				"sent": "",
+				"sender": "",
+				"identifier": ""
+			},
+			"info": {
+				"language": "en-US",
+				"contact": "",
+				"web": "",
+				"instruction": "",
+				"description": "",
+				"headline": "Major flooding on the Yarra",
+				"senderName": "",
+				"expire": "",
+				"onset": "",
+				"effective": "",
+				"certainty": "Observed",
+				"severity": "Severe",
+				"urgency": "Immediate",
+				"responseType": "Evacuate",
+				"event": "",
+				"category": "Met"
+			},
+			"resource": [{
+				"resourceDesc": 'Website',
+				"url": 'http://www.bom.gov.au/australia/warnings/index.shtml',
+			}],
+			"area": {
+				"areaDesc": "Warrandyte",
+				"geocode": "-37.723207 145.192738 -37.741942 145.184155 -37.746557 145.198231 -37.743978 145.2178 -37.731218 145.222607 -37.723886 145.212479 -37.723207 145.192738",
+				"location": [-37.723207, 145.192738]
+			},
+			"_id": "4de9daf0ca6f38200e000002"
+		},{
+			"alert": {
+				"status": "Actual",
+				"scope": "Public",
+				"references": "",
+				"note": "",
+				"source": "",
+				"msgType": "Alert",
+				"sent": "",
+				"sender": "",
+				"identifier": ""
+			},
+			"info": {
+				"language": "en-US",
+				"contact": "",
+				"web": "",
+				"instruction": "",
+				"description": "",
+				"headline": "Yarra flooding near templestowe parkland",
+				"senderName": "",
+				"expire": "",
+				"onset": "",
+				"effective": "",
+				"certainty": "Observed",
+				"severity": "Moderate",
+				"urgency": "Expected",
+				"responseType": "Prepare",
+				"event": "",
+				"category": "Met"
+			},
+			"resource": [],
+			"area": {
+				"areaDesc": "Templestowe",
+				"geocode": "-37.742078 145.114975 -37.750765 145.133343 -37.744929 145.146904 -37.743707 145.159779 -37.730675 145.163212 -37.732575 145.138321 -37.742078 145.114975",
+				"location": [-37.742078, 145.114975]
+			},
+			"_id": "4de9daf0ca6f38200e000002"
+		},{
+			"alert": {
+				"status": "Actual",
+				"scope": "Public",
+				"references": "",
+				"note": "",
+				"source": "",
+				"msgType": "Alert",
+				"sent": "",
+				"sender": "",
+				"identifier": ""
+			},
+			"info": {
+				"language": "en-US",
+				"contact": "",
+				"web": "",
+				"instruction": "",
+				"description": "",
+				"headline": "Yarra floods",
+				"senderName": "",
+				"expire": "",
+				"onset": "",
+				"effective": "Observed",
+				"certainty": "Likely",
+				"severity": "Minor",
+				"urgency": "Expected",
+				"responseType": "Monitor",
+				"event": "",
+				"category": "Met"
+			},
+			"resource": [],
+			"area": {
+				"areaDesc": "Heidelberg",
+				"geocode": "-37.769629 145.066223 -37.772886 145.085964 -37.760808 145.086651 -37.749951 145.076694 -37.760266 145.068111 -37.769629 145.066223",
+				"location": [-37.769629, 145.066223]
+			},
+			"_id": "4de9daf0ca6f38200e000002"
+		},
+		{
+			"alert": {
+				"status": "Actual",
+				"scope": "Public",
+				"references": "",
+				"note": "",
+				"source": "",
+				"msgType": "Alert",
+				"sent": "",
+				"sender": "",
+				"identifier": ""
+			},
+			"info": {
+				"language": "en-US",
+				"contact": "",
+				"web": "",
+				"instruction": "",
+				"description": "",
+				"headline": "Yarra flooding apocolypse",
+				"senderName": "",
+				"expire": "",
+				"onset": "",
+				"effective": "Expected",
+				"certainty": "Likely",
+				"severity": "Severe",
+				"urgency": "Expected",
+				"responseType": "Evacuate",
+				"event": "",
+				"category": "Met"
+			},
+			"resource": [],
+			"area": {
+				"areaDesc": "Hawthorn",
+				"geocode": "-37.813446 145.00906 -37.820362 145.009575 -37.828226 145.011806 -37.824972 145.028114 -37.818599 145.02039 -37.808292 145.021248 -37.813446 145.00906",
+				"location": [-37.813446, 145.00906]
+			},
+			"_id": "4de9daf0ca6f38200e000002"
+		},
+		{
+			"alert": {
+				"status": "Actual",
+				"scope": "Public",
+				"references": "",
+				"note": "",
+				"source": "",
+				"msgType": "Alert",
+				"sent": "",
+				"sender": "",
+				"identifier": ""
+			},
+			"info": {
+				"language": "en-US",
+				"contact": "",
+				"web": "",
+				"instruction": "",
+				"description": "",
+				"headline": "Yarra flooding apocolypse",
+				"senderName": "",
+				"expire": "",
+				"onset": "",
+				"effective": "Expected",
+				"certainty": "Observed",
+				"severity": "Extreme",
+				"urgency": "Expected",
+				"responseType": "Shelter",
+				"event": "",
+				"category": "Met"
+			},
+			"resource": [],
+			"area": {
+				"areaDesc": "Southbank",
+				"geocode": "-37.816022 144.972153 -37.821853 144.969234 -37.831616 144.977818 -37.833785 144.986401 -37.829446 144.995327 -37.821446 144.985027 -37.816022 144.972153",
+				"location": [-37.816022, 144.972153]
+			},
+			"_id": "4de9daf0ca6f38200e000002"
+		}];
 	
 		var location;
 		var siberia = new google.maps.LatLng(60, 105);
@@ -343,6 +535,8 @@
 		  infowindow.open(map);
 		}
 		
+		$("#map").height($(window).height() - $("header").outerHeight() - 20);
+		
 		initialize();
 		
 		$("#location>input").autocomplete({
@@ -380,6 +574,8 @@
 				console.log(response);
 			});
 			
+			var returndata = warrandyte;
+			
 			location = new google.maps.LatLng(latitude, longitude);
 			marker.setPosition(location);
 			map.setCenter(location);
@@ -399,7 +595,18 @@
 			
 			clearPolygons();
 			
+			
+			$(document).delegate("header", "click", function(){
+				$("#comments").hide();
+			});
+			$(document).delegate("li.comments", "click", function(event){
+				$("#comments").show();
+			});
+			
 			function activatePolygon(polygon, $li, obj) {
+				if ($li.hasClass("focus"))
+					return;
+				
 				if (activePolygon) {
 					activePolygon.setOptions({fillOpacity: 0.2, strokeWeight: 2});
 				}
@@ -413,17 +620,28 @@
 			
 			$info.html('');
 			
-			$.each(mockjson, function(){
-				var obj = this;
+			$.each(returndata, function(){
+				var obj = this,
+					returnHtml = '';
 				
-				var $li = $('<li>' + obj.info.headline + '<ul>'+
+				returnHtml = '<li>' + obj.info.headline + '<ul>'+
 					'<li><em>Response Type:</em> '+ obj.info.responseType + '</li>'+
 					'<li><em>Urgency:</em> '+ obj.info.urgency + '</li>'+
 					'<li><em>Severity:</em> '+ obj.info.severity + '</li>'+
-					'<li><em>Certainty:</em> '+ obj.info.certainty + '</li>'+
-				'</ul></li>');
+					'<li><em>Certainty:</em> '+ obj.info.certainty + '</li>';
 				
-				var polygon = drawPolygon(obj.area.polygon, obj.info);
+				if (obj.resource.length) {
+					returnHtml += '<li class="title">Resources</li>';
+					$.each(obj.resource, function(){
+						returnHtml += '<li><a href="' + this.url + '" target="_blank">' + this.resourceDesc + '</a></li>';
+					});
+				}
+				
+				returnHtml += '<li class="comments">Show Comments</li></ul></li>';
+				
+				var $li = $(returnHtml);
+				
+				var polygon = drawPolygon(obj.area.geocode, obj.info);
 				
 				google.maps.event.addListener(polygon, 'click', function() {
 					activatePolygon(polygon, $li, obj)
