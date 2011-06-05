@@ -276,6 +276,11 @@ header h1 {
 	#alerts li.focus li {
 		color: white;
 	}
+	#alerts li li em {
+		display: inline-block;
+		font-weight: bold;
+		width: 120px;
+	}
 
 #map {
 	display: block;

@@ -1,9 +1,216 @@
 (function(window, $, _){
 
+	//Socket
+		/**
+		 * Rhok.
+		 * Tony Milne, Inlight Media.
+		 * June 2011.
+		 */
+
+		var webSocket = new io.Socket('g4cx.showoff.io', {port:80});
+
+		/**
+		 * Pending requests keyed by guid, with a callback as the value.
+		 * E.g. "4FAC90E7-8CF1-4180-B47B-09C3A246CB67": function(err, response) { ... }
+		 */
+		var pending = {};
+
+		var data = [];
+
+		
+		initSocket();
+
+		function bootstrap(url, routes) {
+			var parts = url.substring(1).split('/');
+
+			// Traverse the routes, running any functions it finds (and stopping on undefined).
+
+			var path = 'routes';
+			var context = routes;
+			var called = 0;
+			var broke = false;
+
+			for (var i = 0; i < parts.length; i++) {
+				var key = parts[i];
+
+				var target = context[key];
+				if (typeof target !== 'undefined') {
+					if (typeof target === 'function') {
+						target();
+						called++;
+					}
+					else if (typeof target === 'object') {
+						context = target;
+
+						// Update the path for display purposes on the next loop iteration.
+						path += '[' + key + ']';
+
+						// Attempt to call the init function of this object.
+						var init = context['init'];
+						if (typeof init === 'function') {
+							init();
+						}
+						else {
+							$(document).log('Bootstrap route: ' + path + '[init] was undefined or not a function (ignoring this).');
+						}
+					}
+					else {
+						$(document).log('Bootstrap route: ' + path + '[' + key + '] was found, but is not a function or object (breaking loop now).');
+						broke = true; break;
+					}
+				}
+				else {
+					$(document).log('Bootstrap route: ' + path + '[' + key + '] is undefined (breaking loop now).');
+					broke = true; break
+				}
+			}
+			if (!broke && called === 0) {
+				// Attempt to call index function.
+				var index = context['index'];
+				if (typeof index === 'function') {
+					index();
+				}
+				else {
+					$(document).log('Bootstrap route: ' + path + '[index] was undefined or not a function (ignoring this).');
+				}
+			}
+		}
+
+		/**
+		 * Declare bootstrap functions for controllers and actions.
+		 * Init functions are run before action functions.
+		 * Init functions are run for all actions on a controller.
+		 * Action functions are obviously only run for a particular action.
+		 */
+		var routes = {
+			admin: {
+				alerts: {
+					add: function() {
+						// init the map ;)
+						initialize();
+					}
+				}
+			},
+			alerts: function() {
+				alert('hello');
+			},
+			pages: {
+				index: function() {},
+				init: function() {},
+			},
+		};
+
+		function initSocket() {
+			// Socket.io
+			webSocket.connect();
+			webSocket.on('connect', function() {
+			});
+			webSocket.on('message', function(json) {
+				// Attempt to run the callback and delete the response guid from pending requests.
+				var msg = JSON.parse(json);
+
+				if (typeof msg.type != 'undefined') {
+					// Server subscription pushed message.
+					if (msg.type == 'subscription') {
+						var now = new Date();
+						data.push([now, ++brandViews]);
+					}
+					else if (msg.type == 'alert') {
+						alert('new alert!');
+					}
+					else if (msg.type == 'response') {
+						var guid = msg.echo.identifier;
+						if (typeof pending[guid] == 'function') {
+							var callback = pending[guid];
+							callback(null, msg);
+							delete pending[guid];
+						}
+					}
+				}
+				else {
+					//console.log('Message type is undefined.');
+				}
+			});
+			webSocket.on('disconnect', function() {
+				//console.log('web socket disconnect...');
+			});
+		}
+
+		function socketRequest(url, options, callback) {
+			var guid = newGuid();
+			var sessionId = getSessionId();
+
+			var parts = url.substring(1).split('/');
+			var controller = parts.shift();
+			var action = parts.shift();
+			var args = parts;
+
+			var method = options.method ? options.method : 'GET';
+			var respondAs = options.respondAs ? options.respondAs : 'json';
+			var extension = respondAs == 'html' ? 'ejs' : 'json';
+
+			var postParams = options.postParams || {};
+			var getParams = {
+				extension: extension,
+			};
+
+			for (var i = 0; i < args.length; i++) {
+				getParams[i] = args[i];
+			}
+
+			var request = {
+				sessionId: sessionId,
+				type: 'request',
+				url: url,
+				method: method,
+				respondAs: respondAs,
+				postParams: postParams,
+				getParams: getParams,
+				echo: {
+					identifier: guid,
+					expires: null, // iOS devices use this, we don't bother. ;p
+				},
+			};
+
+			// @TODO: This should just do while... instead of breaking.
+			if (typeof pending[guid] != 'undefined') {
+				//console.log('Wow. A clash in socket.io request guids occurred... this sure is unexpected!');
+			}
+			else {
+				pending[guid] = callback;
+			}
+
+			webSocket.send(request);
+		}
+
+		function getSessionId() {
+			var sessionId = 'CUEOAxO1VbcW9QivxkxeyI3M.nFMl2KUKXwvgQHOEkDHhjXgMBg7qsaaxmcRPkSCiNTI';
+
+			return sessionId;
+		}
+
+		function newGuid() {
+			return (S4()+S4()+'-'+S4()+'-'+S4()+'-'+S4()+'-'+S4()+S4()+S4());
+
+			function S4() {
+			   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+			};
+		};
+
+		/**
+		 * Subscription handlers...
+		 * // @TODO: Re-factor these into somewhere better.
+		 */
+
+		function newAlert(obj) {
+
+		}
+
 	//Google Maps code
 	$(function(){
 	
 		var mockjson = [{
+			_id: 8933563465546,
 			alert: {
 				status: 'Actual',
 				msgType: 'Alert',
@@ -25,6 +232,7 @@
 				polygon: "-37.817921 145.033951 -37.818463 145.05043 -37.842326 145.053864 -37.842868 145.039444 -37.817921 145.033951"
 			}
 		},{
+			_id: 893264082316,
 			alert: {
 				status: 'Actual',
 				msgType: 'Alert',
@@ -46,6 +254,7 @@
 				polygon: '-37.843953 145.020218 -37.851543 145.041504 -37.865097 145.025024 -37.843953 145.020218'
 			}
 		},{
+			_id: 8857578578746,
 			alert: {
 				status: 'Actual',
 				msgType: 'Alert',
@@ -80,8 +289,8 @@
 		var severityColors = {
 			Extreme: "black",
 			Severe: "red",
-			Moderate: "blue",
-			Minor: "aqua",
+			Moderate: "purple",
+			Minor: "blue",
 			Unknown: "white"
 		};
 		  
@@ -165,6 +374,12 @@
 		var activePolygon;
 		
 		function dropPin(latitude, longitude) {
+			var url = '/alerts/nearby/'+latitude.toString().replace(".","_")+'/'+longitude.toString().replace(".","_")+'/10.json';
+			
+			socketRequest(url, {}, function(err, response){
+				console.log(response);
+			});
+			
 			location = new google.maps.LatLng(latitude, longitude);
 			marker.setPosition(location);
 			map.setCenter(location);
@@ -184,9 +399,7 @@
 			
 			clearPolygons();
 			
-			$info.html('');
-			
-			function activatePolygon(polygon, $li) {
+			function activatePolygon(polygon, $li, obj) {
 				if (activePolygon) {
 					activePolygon.setOptions({fillOpacity: 0.2, strokeWeight: 2});
 				}
@@ -194,23 +407,30 @@
 				polygon.setOptions({fillOpacity: 0.75, strokeWeight: 5});
 				$info.children('li.focus').removeClass('focus').children('ul').slideUp();
 				$li.addClass('focus').children('ul').slideDown();
+				
+				ReloadComments(obj._id);
 			}
 			
-			
+			$info.html('');
 			
 			$.each(mockjson, function(){
 				var obj = this;
 				
-				var $li = $('<li>'+obj.info.headline+'<ul><li>Testing: Testing</li><li>Testing: Testing</li><li>Testing: Testing</li></ul></li>');
+				var $li = $('<li>' + obj.info.headline + '<ul>'+
+					'<li><em>Response Type:</em> '+ obj.info.responseType + '</li>'+
+					'<li><em>Urgency:</em> '+ obj.info.urgency + '</li>'+
+					'<li><em>Severity:</em> '+ obj.info.severity + '</li>'+
+					'<li><em>Certainty:</em> '+ obj.info.certainty + '</li>'+
+				'</ul></li>');
 				
 				var polygon = drawPolygon(obj.area.polygon, obj.info);
 				
 				google.maps.event.addListener(polygon, 'click', function() {
-					activatePolygon(polygon, $li)
+					activatePolygon(polygon, $li, obj)
 				});
 				
 				$li.click(function(){
-					activatePolygon(polygon, $(this))
+					activatePolygon(polygon, $(this), obj)
 				});
 				
 				$info.append($li);
@@ -259,6 +479,38 @@
 			
 			return polygon1;
 		}
+		
+		
+		/* Disqus */
+		    //Event Handler to reload comments if the refernence changes. Ie the alert.
+			 function ReloadComments(ref) {
+				 DISQUS.reset({
+					 reload: true,
+					 config: function () {
+						 this.page.identifier = ref;
+						 this.page.url = window.location.href;
+					 }
+				 });
+			 }
+
+			 //Gets an param from  http://www.netlobo.com/url_query_string_javascript.html
+			function gup( name )
+			{
+			  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+			  var regexS = "[\\?&]"+name+"=([^&#]*)";
+			  var regex = new RegExp( regexS );
+			  var results = regex.exec( window.location.href );
+			  if( results == null )
+				return "";
+			  else
+				return results[1];
+			}
+		  
+		  
+			var disqus_developer = (/localhost|github|dev/i).test(window.location.href);
+			var disqus_identifier = '12234234';
+			var disqus_url = window.location.href;
+			var disqus_title = 'weatherwarnings';
 		
 	});
 
