@@ -7,7 +7,7 @@
 		 * June 2011.
 		 */
 
-		var webSocket = new io.Socket('g4cx.showoff.io', {port:80});
+		var webSocket = new io.Socket('tbqf.showoff.io', {port:80});
 
 		/**
 		 * Pending requests keyed by guid, with a callback as the value.
